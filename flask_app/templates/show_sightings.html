@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body{
+            padding: 15px;
+        }
+        .row{
+            display: flex;
+        }
+        .row > div{
+            flex:1;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div class="row">
+        <div>
+            <h1>{{user.first_name}} {{user.last_name}}</h1>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/logout">Logout</a>
+            <h1>{{sighting.location}} on {{sighting.sighting_date.strftime("%b %d %Y")}}</h1>
+            <h3>What Happened:</h3>
+            <h3>{{sighting.description}}</h3>
+            <h3># of Sasquatches: {{sighting.num_sasquatch}}</h3>
+            <h3>Reported By: {{sighting.creator_first_name}} {{sighting.creator_last_name}}</h3>
+        </div>
+        <div>
+            <h2>Skeptics</h2>
+            {% set ns = namespace(skeptic = False) %}
+            {% for skeptic in skeptics %}
+                <p>{{skeptic.first_name}} {{skeptic.last_name}}</p>
+                {% if skeptic.id == user.id %}
+                    {% set ns.skeptic = True %}
+                {% endif %}
+            {% endfor %}
+
+            {% if ns.skeptic %}
+                <form action="/sightings/{{sighting.id}}/believe" method="post">
+                    <button>Believe It!</button>
+                </form>
+            {% else %}
+                <form action="/sightings/{{sighting.id}}/skeptic" method="post">
+                    <button>I'm Skeptical</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>

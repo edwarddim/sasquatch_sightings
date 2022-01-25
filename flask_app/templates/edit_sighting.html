@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Edit this Sighting</h1>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/logout">Logout</a>
+    <form action="/sightings/{{sighting.id}}/update" method="post">
+        <p>
+            Location:
+            <input type="text" name="location" value="{{sighting.location}}" id="">
+        </p>
+        <p>
+            What Happened:
+            <textarea name="description" id="" cols="30" rows="10">{{sighting.description}}</textarea>
+        </p>
+        <p>
+            Date of Sighting:
+            <input type="date" name="sighting_date" value="{{sighting.sighting_date}}" id="">
+        </p>
+        <p>
+            # of Sasquatches:
+            <input type="number" name="num_sasquatch" value="{{sighting.num_sasquatch}}" min="1" id="">
+        </p>
+        <button>Update</button>
+    </form>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{message}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</body>
+</html>
